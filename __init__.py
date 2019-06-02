@@ -33,7 +33,9 @@ def get_data_by_property(prop):
             replacing.append(i.split('}')[0])
         for i in replacing:
             if len(rp[i])>0 and not rp[i]==['']:
-                out=out.replace('{'+i+'}',arr_to_str(rp[i]))
+                set=arr_to_str(rp[i])
+                set=set.replace('.0','')
+                out=out.replace('{'+i+'}',set)
             else:
                 out=out.replace('{'+i+'}','-')
         if out.endswith('</;'):
