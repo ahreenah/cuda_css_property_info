@@ -8,14 +8,14 @@ default_browsers='IE {IE}; Chr {Chrome}; Op {Opera}; Sf {Safari}; Mz {Mozilla}; 
 
 def short_name(name):
     names_pairs=ini_read(fn_config,'op','info',default_browsers).split(';')
-    names_dict={}
-    for i in names_pairs:
-        full=i.split('{')[1].split('}')[0]
-        short=i.split('{')[0].strip()
-        names_dict[full]=short
-    if not name in names_dict:
-        return name
-    return names_dict[name]
+    names_dict={}                                                          
+    for i in names_pairs:                                                  
+        full=i.split('{')[1].split('}')[0]                                 
+        short=i.split('{')[0].strip()                                      
+        names_dict[full]=short                                             
+    if not name in names_dict:                                             
+        return name                                                        
+    return names_dict[name]                                                
 
 def arr_to_str(arr):
     res=arr[0].rstrip('+')
