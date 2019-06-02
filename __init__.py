@@ -26,8 +26,21 @@ def arr_to_str(arr):
 def get_data_by_property(prop):
     global res
     if prop in res:
-        out=''
+        out=ini_read(fn_config,'op','info',default_browsers)
+        replacing=[]
         rp=res[prop]
+        for i in out.split('{')[1:]:
+            replacing.append(i.split('}')[0])
+        for i in replacing:
+            if len(rp[i])>0 and not rp[i]==['']:
+                out=out.replace('{'+i+'}',arr_to_str(rp[i]))
+            else:
+                out=out.replace('{'+i+'}','-')
+        if out.endswith('</;'):
+            out=out[:-3]
+        if out.endswith('+</'):
+            out=out[:-3]    
+        return out
         for i in rp:
             if len(rp[i])>0 and not rp[i]==['']:
                 out+=short_name(i)+' '+arr_to_str(rp[i]).replace('.0','')+';'
