@@ -2,7 +2,7 @@
 title=CSS Property Info
 desc=Shows information about selected CSS property in statusbar
 type=cudatext-plugin
-subdir=cuda_cuda_css_property_info
+subdir=cuda_cuda_property_info
 homepage=https://github.com/medvosa/cuda_css_property_info
 $css=CSS,SCSS,Sass,LESS,Stylus,HTML
 
