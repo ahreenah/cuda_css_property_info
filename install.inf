@@ -1,0 +1,11 @@
+[info]
+title=CSSPropertyInfo
+desc=Some description
+type=cudatext-plugin
+subdir=cuda_cuda_css_property_info
+homepage=
+
+[item1]
+section=events
+events=on_caret
+
