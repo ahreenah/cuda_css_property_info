@@ -1,8 +1,10 @@
+
 import os
 from cudatext import *
 import json
 
-data_folder_name=os.path.dirname(os.path.abspath(__file__))
+fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'cuda_css_property_info.ini')
+data_folder_name=os.path.dirname(os.path.abspath(__file__))+os.sep+'data.json'
 
 default_browsers='IE {Internet Explorer}; Chr {Chrome}; Op {Opera}; Sf {Safari}; Mz {Firefox}; An {Android}; iOS {iOS}'
 
@@ -53,13 +55,12 @@ def get_data_by_property(prop):
         return out
     return False
 
-fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'cuda_css_property_info.ini')
 
 class Command:
     
     def __init__(self):
         global res#=json.load(open('result.json','r'))
-        res=json.load(open(data_folder_name+os.sep+'data.json','r'))
+        res=json.load(open(data_folder_name,'r'))
 
     def config(self):
         if not os.path.exists(fn_config):
