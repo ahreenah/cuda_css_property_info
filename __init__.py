@@ -64,6 +64,7 @@ class Command:
     def config(self):
         if not os.path.exists(fn_config):
             ini_write(fn_config,'op','info',default_browsers)
+            ini_write(fn_config,'op','status_alt','0')
         file_open(fn_config)
         pass
                 
@@ -80,4 +81,7 @@ class Command:
             if text:
                 res=get_data_by_property(text)
                 if res:
-                    msg_status(res)# font-size
+                    if ini_read(fn_config,'op','status_alt','0')=='1':
+                        msg_status_alt(res,5)
+                    else:
+                        msg_status(res)# font-size
