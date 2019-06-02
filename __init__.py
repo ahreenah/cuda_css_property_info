@@ -4,7 +4,7 @@ import json
 
 data_folder_name=os.path.dirname(os.path.abspath(__file__))
 
-default_browsers='IE {IE}; Chr {Chrome}; Op {Opera}; Sf {Safari}; Mz {Mozilla}; An {Android}; iOS {iOS})'
+default_browsers='IE {IE}; Chr {Chrome}; Op {Opera}; Sf {Safari}; Mz {Mozilla}; An {Android}; iOS {iOS}'
 
 def short_name(name):
     names_pairs=ini_read(fn_config,'op','info',default_browsers).split(';')
