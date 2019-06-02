@@ -2,22 +2,20 @@ import os
 from cudatext import *
 import json
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+data_folder_name=os.path.dirname(os.path.abspath(__file__))
+
+default_browsers='IE {IE}; Chr {Chrome}; Op {Opera}; Sf {Safari}; Mz {Mozilla}; An {Android}; iOS {iOS})'
 
 def short_name(name):
-    if name=='Internet Explorer':
-        return 'IE'
-    elif name=='Chrome':
-        return 'Chr'
-    elif name=='Safari':
-        return 'Saf'
-    elif name=='Firefox':
-        return 'Fox'
-    elif name=='Android':
-        return 'An'
-    elif name=='Opera':
-        return 'Op'
-    return name 
+    names_pairs=ini_read(fn_config,'op','info',default_browsers).split(';')
+    names_dict={}
+    for i in names_pairs:
+        full=i.split('{')[1].split('}')[0]
+        short=i.split('{')[0].strip()
+        names_dict[full]=short
+    if not name in names_dict:
+        return name
+    return names_dict[name]
 
 def arr_to_str(arr):
     res=arr[0].rstrip('+')
@@ -29,9 +27,10 @@ def get_data_by_property(prop):
     global res
     if prop in res:
         out=''
-        for i in res[prop]:
-            if len(res[prop][i])>0 and not res[prop][i]==['']:
-                out+=short_name(i)+' '+arr_to_str(res[prop][i]).replace('.0','')+';'
+        rp=res[prop]
+        for i in rp:
+            if len(rp[i])>0 and not rp[i]==['']:
+                out+=short_name(i)+' '+arr_to_str(rp[i]).replace('.0','')+';'
             else:
                 out+=short_name(i)+' -;'
         if out.endswith('</;'):
@@ -39,26 +38,31 @@ def get_data_by_property(prop):
         return out
     return False
 
-fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'cuda_cuda_css_property_info.ini')
+fn_config = os.path.join(app_path(APP_DIR_SETTINGS), 'cuda_css_property_info.ini')
 
 class Command:
     
     def __init__(self):
         global res#=json.load(open('result.json','r'))
-        res=json.load(open('result.json','r'))
+        res=json.load(open(data_folder_name+os.sep+'data.json','r'))
 
     def config(self):
+        if not os.path.exists(fn_config):
+            ini_write(fn_config,'op','info',default_browsers)
+        file_open(fn_config)
         pass
                 
     def on_caret(self, ed_self):
         x,y,x1,y1=ed_self.get_carets()[0]
         #print(ed_self.get_carets()[0][2])
+        if not y==y1:
+            return
         if not (x1==-1):
             if x>x1:
                 x,x1=x1,x
             #print(str(x)+' '+str(y)+' '+str(x1)+' '+str(y1))
             text=ed_self.get_text_substr(x,y,x1,y1)
-            if len(text)>0:
+            if text:
                 res=get_data_by_property(text)
                 if res:
                     msg_status(res)# font-size
